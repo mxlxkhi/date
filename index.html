@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Typing Effect</title>
+    <title>Typfect</title>
     <style>
         body {
             background-color: black;
@@ -14,6 +14,7 @@
             align-items: center;
             height: 100vh;
             font-size: 1.5rem;
+            overflow: hidden;
         }
         .cursor {
             display: inline-block;
@@ -36,14 +37,13 @@
 <body>
     <div id="text"></div><span class="cursor">|</span>
     <div id="morseCode">.. / .-.. --- ...- . / -.-- --- ..- .-.-.-</div>
-    <input type="text" id="input" autofocus placeholder="Type here..." />
 
     <script>
         const textElement = document.getElementById("text");
         const morseCodeElement = document.getElementById("morseCode");
-        const inputElement = document.getElementById("input");
         const text = "14.3.25";
         let index = 0;
+        let typedText = "";
 
         // Typing effect for the "14.3.25"
         function typeEffect() {
@@ -68,12 +68,19 @@
 
         typeEffect();
 
-        // Detect when "turtle" is typed
-        inputElement.addEventListener("input", () => {
-            if (inputElement.value.toLowerCase() === "turtle") {
+        // Listen for keypresses globally
+        document.addEventListener("keydown", (event) => {
+            typedText += event.key.toLowerCase(); // Add the key pressed to the typedText string
+
+            if (typedText.includes("turtle")) {
                 morseCodeElement.style.color = "white"; // Change Morse code color to white
             } else {
-                morseCodeElement.style.color = "black"; // Change Morse code color back to black
+                morseCodeElement.style.color = "black"; // Change back to black if not "turtle"
+            }
+
+            // Optionally, you can limit the length of the typedText string for performance
+            if (typedText.length > 10) { // You can adjust the length limit if needed
+                typedText = typedText.slice(1);
             }
         });
     </script>
