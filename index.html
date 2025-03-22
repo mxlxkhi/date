@@ -12,6 +12,7 @@
             color: white;
             font-family: "Courier New", monospace;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -28,15 +29,35 @@
         @keyframes blink {
             50% { opacity: 0; }
         }
+        #console {
+            width: 80%;
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-family: "Courier New", monospace;
+            font-size: 1.5rem;
+            outline: none;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        #console:focus {
+            outline: none;
+        }
     </style>
 </head>
 <body>
     <div id="text"></div><span class="cursor">|</span>
+    <input id="console" type="text" autofocus readonly />
+    
     <script>
         const textElement = document.getElementById("text");
-        const text = "14.3.25";
+        const consoleElement = document.getElementById("console");
+        const text = "fourteenth of February two thousand and twenty five";
         let index = 0;
 
+        // Function for the typing effect
         function typeEffect() {
             if (index < text.length) {
                 textElement.textContent += text[index];
@@ -47,6 +68,7 @@
             }
         }
 
+        // Function for the erasing effect
         function eraseEffect() {
             if (index > 0) {
                 textElement.textContent = text.substring(0, index - 1);
@@ -57,7 +79,14 @@
             }
         }
 
+        // Start the typing effect
         typeEffect();
+
+        // Whenever a key is pressed, prevent default and replace input with the fixed phrase
+        document.addEventListener('keydown', (event) => {
+            event.preventDefault(); // Prevent default keypress behavior
+            consoleElement.value = text; // Set input value to the fixed text
+        });
     </script>
 </body>
 </html>
