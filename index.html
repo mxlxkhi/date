@@ -14,7 +14,6 @@
             align-items: center;
             height: 100vh;
             font-size: 1.5rem;
-            flex-direction: column;
         }
         .cursor {
             display: inline-block;
@@ -25,70 +24,36 @@
         @keyframes blink {
             50% { opacity: 0; }
         }
-        #console {
-            width: 80%;
-            background-color: black;
-            color: white;
-            border: none;
-            padding: 5px;
-            font-family: "Courier New", monospace;
-            font-size: 1rem;
-            outline: none;
-            text-align: left;
-            white-space: nowrap;
-            overflow: hidden;
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body>
-    <!-- 1: "14.3.25" typing effect (center of screen) -->
     <div id="text"></div><span class="cursor">|</span>
-
-    <!-- 2: "fourteenth of February two thousand and twenty five" typing effect (bottom of screen) -->
-    <input id="console" type="text" readonly />
-
     <script>
         const textElement = document.getElementById("text");
-        const consoleElement = document.getElementById("console");
         const text = "14.3.25";
-        const sentence = "fourteenth of February two thousand and twenty five";
         let index = 0;
-        let sentenceIndex = 0;
 
-        // Function to type "14.3.25"
         function typeEffect() {
             if (index < text.length) {
                 textElement.textContent += text[index];
                 index++;
                 setTimeout(typeEffect, 300);
             } else {
-                setTimeout(eraseEffect, 5000); // Erase after 5 seconds
+                setTimeout(eraseEffect, 5000);
             }
         }
 
-        // Erase "14.3.25"
         function eraseEffect() {
             if (index > 0) {
                 textElement.textContent = text.substring(0, index - 1);
                 index--;
-                setTimeout(eraseEffect, 300); // Erase character by character
+                setTimeout(eraseEffect, 300);
             } else {
-                setTimeout(typeEffect, 1000); // Restart typing after erasure
+                setTimeout(typeEffect, 1000);
             }
         }
 
-        // Function to type the sentence
-        function typeSentence() {
-            if (sentenceIndex < sentence.length) {
-                consoleElement.value += sentence[sentenceIndex];
-                sentenceIndex++;
-                setTimeout(typeSentence, 300); // Type one character at a time
-            }
-        }
-
-        typeEffect(); // Start typing "14.3.25"
-        typeSentence(); // Start typing the full sentence at the bottom
+        typeEffect();
     </script>
 </body>
 </html>
