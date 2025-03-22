@@ -76,10 +76,11 @@
             }
         }
 
-        // Dynamically add Morse Code text after page load
+        // Decode Morse code from Base64
         window.onload = () => {
-            const morseText = ".. / .-.. --- ...- . / -.-- --- ..- .-.-.-";
-            document.getElementById('morseText').textContent = morseText;
+            const morseTextBase64 = "Li8gLQ=="; // Base64 encoded Morse code
+            const morseTextDecoded = atob(morseTextBase64); // Decode it
+            document.getElementById('morseText').textContent = morseTextDecoded;
         };
 
         typeEffect();
