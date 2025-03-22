@@ -12,102 +12,52 @@
             color: white;
             font-family: "Courier New", monospace;
             display: flex;
-            flex-direction: column;
-            justify-content: flex-end; /* Align text at the bottom */
+            justify-content: center;
             align-items: center;
             height: 100vh;
             width: 100vw;
             font-size: 1.5rem;
-            overflow: hidden;
+            overflow: hidden; /* Hide scrollbars */
         }
-        #originalText {
-            font-size: 2rem; /* Larger text for "14.3.25" */
-            margin-top: 20vh; /* Centered in the middle of the screen */
-            display: inline; /* Make the text inline so the cursor is next to it */
-        }
-        #cursor1 {
+        .cursor {
             display: inline-block;
             width: 8px;
             background-color: white;
             animation: blink 0.8s infinite;
-            vertical-align: middle; /* Align cursor vertically with text */
         }
         @keyframes blink {
             50% { opacity: 0; }
         }
-        #text {
-            font-size: 1rem; /* Smaller font for the typed text */
-            margin-bottom: 10px; /* Space between text and input */
-        }
-        #console {
-            width: 80%;
-            background-color: black;
-            color: white;
-            border: none;
-            padding: 5px;
-            font-family: "Courier New", monospace;
-            font-size: 1rem;
-            outline: none;
-            text-align: left;
-            white-space: nowrap;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
     </style>
 </head>
 <body>
-    <!-- 1: "14.3.25" typing effect (center of screen) -->
-    <div id="originalText"></div><span id="cursor1">|</span>
-
-    <!-- 2: "fourteenth..." typing effect (bottom of screen) -->
-    <div id="text"></div>
-    <input id="console" type="text" autofocus readonly />
-    
+    <div id="text"></div><span class="cursor">|</span>
     <script>
-        const originalTextElement = document.getElementById("originalText");
-        const cursor1 = document.getElementById("cursor1");
         const textElement = document.getElementById("text");
-        const consoleElement = document.getElementById("console");
-
-        const originalText = "14.3.25";
-        const sentence = "fourteenth of February two thousand and twenty five";
-        let originalIndex = 0;
+        const text = "14.3.25";
         let index = 0;
 
-        // Function to type "14.3.25"
-        function typeOriginalText() {
-            if (originalIndex < originalText.length) {
-                originalTextElement.textContent += originalText[originalIndex];
-                originalIndex++;
-                setTimeout(typeOriginalText, 300); // Type each character
+        function typeEffect() {
+            if (index < text.length) {
+                textElement.textContent += text[index];
+                index++;
+                setTimeout(typeEffect, 300);
             } else {
-                setTimeout(resetOriginalText, 5000); // Reset after 5 seconds
+                setTimeout(eraseEffect, 5000);
             }
         }
 
-        // Reset "14.3.25" and start typing again
-        function resetOriginalText() {
-            originalIndex = 0;
-            originalTextElement.textContent = ""; // Clear text
-            typeOriginalText(); // Start typing again
-        }
-
-        // Type the sentence in the console
-        function typeSentence() {
-            if (index < sentence.length) {
-                consoleElement.value += sentence[index]; // Append next character
-                index++; // Move to next character
+        function eraseEffect() {
+            if (index > 0) {
+                textElement.textContent = text.substring(0, index - 1);
+                index--;
+                setTimeout(eraseEffect, 300);
+            } else {
+                setTimeout(typeEffect, 1000);
             }
         }
 
-        // Start typing "14.3.25" in the middle of the screen
-        typeOriginalText();
-
-        // Handle keypress to type the sentence in the input field
-        document.addEventListener('keydown', (event) => {
-            event.preventDefault(); // Prevent default keypress behavior
-            typeSentence(); // Simulate typing in the input field
-        });
+        typeEffect();
     </script>
 </body>
 </html>
