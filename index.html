@@ -25,7 +25,7 @@
             width: 8px;
             background-color: white;
             animation: blink 0.8s infinite;
-            vertical-align: bottom; /* Ensure the cursor aligns properly with the text */
+            vertical-align: bottom; /* Align with text */
         }
         @keyframes blink {
             50% { opacity: 0; }
@@ -59,7 +59,7 @@
 </head>
 <body>
     <!-- 1: Original "14.3.25" typing effect (middle of the screen) -->
-    <div id="originalText"></div><span class="cursor">|</span>
+    <div id="originalText"></div><span id="cursor" class="cursor">|</span>
 
     <!-- 2: "fourteenth of February" typing effect (bottom of the screen) -->
     <div id="text"></div><span class="cursor">|</span>
@@ -67,6 +67,7 @@
     
     <script>
         const originalTextElement = document.getElementById("originalText");
+        const cursorElement = document.getElementById("cursor");
         const textElement = document.getElementById("text");
         const consoleElement = document.getElementById("console");
 
