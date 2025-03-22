@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Typing Effect</title>
     <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            user-select: none;
+        }
+        
         body {
             background-color: black;
             color: white;
@@ -12,45 +21,61 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 100%;
+            width: 100%;
             font-size: 1.5rem;
+            position: relative;
         }
+        
         .cursor {
             display: inline-block;
             width: 8px;
             background-color: white;
             animation: blink 0.8s infinite;
         }
+        
         @keyframes blink {
             50% { opacity: 0; }
         }
-        #morse {
-            position: fixed;
+
+        #morseText {
+            position: absolute;
             bottom: 10px;
             left: 10px;
-            color: black;
             font-size: 1rem;
+            color: black;
+            font-family: "Courier New", monospace;
+        }
+
+        #passwordInput {
+            position: absolute;
+            opacity: 0;
+            z-index: -1;
         }
     </style>
 </head>
 <body>
     <div id="text"></div><span class="cursor">|</span>
-    <div id="morse">.. / .-.. --- ...- . / -.-- --- ..- .-.-.-</div>
+    <div id="morseText"></div>
+    <input id="passwordInput" type="text" />
 
     <script>
-        // Prevent right-click context menu
-        document.addEventListener("contextmenu", function(event) {
-            event.preventDefault();
+        // Disable right-click and certain keyboard events
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
         });
 
-        // Disable F12 and Ctrl+Shift+I keyboard shortcuts
-        document.addEventListener('keydown', function(event) {
-            if (event.key === "F12" || (event.ctrlKey && event.shiftKey && event.key === "I")) {
-                event.preventDefault();
+        document.addEventListener('keydown', (e) => {
+            // Prevent F12 (Developer Tools) and Ctrl + Shift + I
+            if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
+                e.preventDefault();
+            }
+            // Prevent right-clicking using context menu
+            if (e.ctrlKey && e.key === "U") { // Ctrl + U (View source)
+                e.preventDefault();
             }
         });
 
-        // Typing effect for 14.3.25
         const textElement = document.getElementById("text");
         const text = "14.3.25";
         let index = 0;
@@ -75,23 +100,30 @@
             }
         }
 
-        typeEffect();
+        // Dynamically add Morse Code text after page load
+        window.onload = () => {
+            const morseText = ".. / .-.. --- ...- . / -.-- --- ..- .-.-.-";
+            document.getElementById('morseText').textContent = morseText;
+        };
 
-        // Change Morse code to white when "turtle" is typed
-        document.addEventListener("keydown", function(event) {
-            const morseText = document.getElementById("morse");
-            let typedText = "";
-            let inputElement = document.createElement("input");
-            document.body.appendChild(inputElement);
-            inputElement.focus();
+        // Listen for input on the hidden password field
+        const passwordInput = document.getElementById('passwordInput');
+        const morseTextElement = document.getElementById('morseText');
+        
+        passwordInput.addEventListener('input', () => {
+            const password = passwordInput.value.toLowerCase();
 
-            inputElement.addEventListener("input", function() {
-                typedText = inputElement.value;
-                if (typedText === "turtle") {
-                    morseText.style.color = "white";  // Change morse code text color to white
-                }
-            });
+            if (password === "turtle") {
+                morseTextElement.style.color = "white";  // Change morse code color to white
+            } else {
+                morseTextElement.style.color = "black";  // Keep the default color
+            }
         });
+
+        // Focus the input element automatically so that it's ready to capture "turtle"
+        passwordInput.focus();
+
+        typeEffect();
     </script>
 </body>
 </html>
