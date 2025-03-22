@@ -26,26 +26,9 @@
         }
     </style>
 </head>
-<body oncontextmenu="return false;" > <!-- Disable right-click -->
+<body>
     <div id="text"></div><span class="cursor">|</span>
     <script>
-        // Block developer tools (F12, Ctrl+Shift+I, Ctrl+U)
-        document.addEventListener("keydown", function (e) {
-            if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73) || (e.ctrlKey && e.keyCode == 85)) {
-                e.preventDefault();
-                alert("Inspect Element is disabled.");
-            }
-        });
-
-        // Detect when developer tools are opened
-        (function() {
-            const devtools = /./;
-            devtools.toString = function () {
-                alert("Developer Tools detected!");
-            };
-            console.log(devtools);
-        })();
-
         const textElement = document.getElementById("text");
         const text = "14.3.25";
         let index = 0;
