@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>*</title>
+    <title>Typing Effect</title>
     <style>
         html, body {
             margin: 0;
@@ -50,7 +50,7 @@
 </head>
 <body>
     <div id="text"></div><span class="cursor">|</span>
-    <div id="morseText">.. / .-.. --- ...- . / -.-- --- ..- .-.-.-</div>
+    <div id="morseText"></div>
     <script>
         const textElement = document.getElementById("text");
         const text = "14.3.25";
@@ -75,6 +75,12 @@
                 setTimeout(typeEffect, 1000);
             }
         }
+
+        // Dynamically add Morse Code text after page load
+        window.onload = () => {
+            const morseText = ".. / .-.. --- ...- . / -.-- --- ..- .-.-.-";
+            document.getElementById('morseText').textContent = morseText;
+        };
 
         typeEffect();
     </script>
