@@ -49,46 +49,21 @@
 </head>
 <body>
     <div id="text"></div><span class="cursor">|</span>
-    <input id="console" type="text" autofocus />
+    <input id="console" type="text" autofocus readonly />
     
     <script>
-        const textElement = document.getElementById("text");
         const consoleElement = document.getElementById("console");
-        const text = "fourteenth of February two thousand and twenty five";
+        const sentence = "fourteenth of February two thousand and twenty five";
         let index = 0;
 
-        // Function for the typing effect
-        function typeEffect() {
-            if (index < text.length) {
-                textElement.textContent += text[index];
-                index++;
-                setTimeout(typeEffect, 300);
-            } else {
-                setTimeout(eraseEffect, 5000);
-            }
-        }
-
-        // Function for the erasing effect
-        function eraseEffect() {
-            if (index > 0) {
-                textElement.textContent = text.substring(0, index - 1);
-                index--;
-                setTimeout(eraseEffect, 300);
-            } else {
-                setTimeout(typeEffect, 1000);
-            }
-        }
-
-        // Start the typing effect
-        typeEffect();
-
-        // When a key is pressed, replace the input value with the fixed phrase
+        // When a key is pressed, replace the input value with the fixed phrase, letter by letter
         document.addEventListener('keydown', (event) => {
             event.preventDefault(); // Prevent the default keypress behavior
-            // Simulate typing the fixed phrase into the input field
-            let currentText = consoleElement.value;
-            if (currentText.length < text.length) {
-                consoleElement.value += text[currentText.length]; // Add the next character
+
+            // If we haven't typed all characters, simulate typing
+            if (index < sentence.length) {
+                consoleElement.value += sentence[index]; // Append the next character from the sentence
+                index++; // Move to the next character
             }
         });
     </script>
