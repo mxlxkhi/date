@@ -13,7 +13,7 @@
             font-family: "Courier New", monospace;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end; /* Align to the bottom */
+            justify-content: flex-end; /* Align both to the bottom */
             align-items: center;
             height: 100vh;
             width: 100vw;
@@ -29,6 +29,10 @@
         @keyframes blink {
             50% { opacity: 0; }
         }
+        #text {
+            font-size: 1rem; /* Smaller font size for the typed text */
+            margin-bottom: 10px; /* Space between the text and input */
+        }
         #console {
             width: 80%;
             background-color: black;
@@ -36,7 +40,7 @@
             border: none;
             padding: 5px;
             font-family: "Courier New", monospace;
-            font-size: 1rem; /* Smaller font size */
+            font-size: 1rem; /* Smaller font size for the input */
             outline: none;
             text-align: left;
             white-space: nowrap;
@@ -53,6 +57,7 @@
     <input id="console" type="text" autofocus readonly />
     
     <script>
+        const textElement = document.getElementById("text");
         const consoleElement = document.getElementById("console");
         const sentence = "fourteenth of February two thousand and twenty five";
         let index = 0;
@@ -67,6 +72,17 @@
                 index++; // Move to the next character
             }
         });
+
+        // Optional: Start the text typing effect if you want it above the input
+        function typeEffect() {
+            if (index < sentence.length) {
+                textElement.textContent += sentence[index];
+                index++;
+                setTimeout(typeEffect, 300);
+            }
+        }
+
+        typeEffect(); // Start typing effect for the sentence above the input
     </script>
 </body>
 </html>
