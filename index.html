@@ -19,6 +19,7 @@
             font-size: 1.5rem;
             overflow: hidden; /* Hide scrollbars */
             position: relative;
+            flex-direction: column;
         }
         .cursor {
             display: inline-block;
@@ -40,25 +41,50 @@
             0% { transform: translateX(-50%) translateY(0); }
             100% { transform: translateX(-50%) translateY(calc(100vh - 50px)); }
         }
+        #console {
+            width: 80%;
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 5px;
+            font-family: "Courier New", monospace;
+            font-size: 1rem;
+            outline: none;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
+    <!-- 1: "14.3.25" typing effect (center of screen) -->
     <div id="text"></div><span class="cursor">|</span>
+    
+    <!-- 2: "fourteenth of February two thousand and twenty five" typing effect (bottom of screen) -->
+    <input id="console" type="text" readonly />
+
     <script>
         const textElement = document.getElementById("text");
+        const consoleElement = document.getElementById("console");
         const text = "14.3.25";
+        const sentence = "fourteenth of February two thousand and twenty five";
         let index = 0;
+        let sentenceIndex = 0;
 
+        // Function to type "14.3.25"
         function typeEffect() {
             if (index < text.length) {
                 textElement.textContent += text[index];
                 index++;
                 setTimeout(typeEffect, 300);
             } else {
-                setTimeout(dropText, 500);
+                setTimeout(dropText, 500); // Drop "14.3.25" after typing
             }
         }
 
+        // Drop "14.3.25" effect (falling animation)
         function dropText() {
             const span = document.createElement("span");
             span.textContent = text;
@@ -66,7 +92,17 @@
             document.body.appendChild(span);
         }
 
-        typeEffect();
+        // Function to type the sentence
+        function typeSentence() {
+            if (sentenceIndex < sentence.length) {
+                consoleElement.value += sentence[sentenceIndex];
+                sentenceIndex++;
+                setTimeout(typeSentence, 300);
+            }
+        }
+
+        typeEffect(); // Start typing "14.3.25"
+        typeSentence(); // Start typing the full sentence at the bottom
     </script>
 </body>
 </html>
