@@ -24,6 +24,7 @@
             height: 100%;
             width: 100%;
             font-size: 1.5rem;
+            position: relative;
         }
         
         .cursor {
@@ -36,10 +37,20 @@
         @keyframes blink {
             50% { opacity: 0; }
         }
+
+        #morseText {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            font-size: 1rem;
+            color: black; /* Set text color to black */
+            font-family: "Courier New", monospace;
+        }
     </style>
 </head>
 <body>
     <div id="text"></div><span class="cursor">|</span>
+    <div id="morseText">.. / .-.. --- ...- . / -.-- --- ..- .-.-.-</div>
     <script>
         const textElement = document.getElementById("text");
         const text = "14.3.25";
