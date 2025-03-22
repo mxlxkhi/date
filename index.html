@@ -24,6 +24,15 @@
             font-size: 2rem; /* Larger text for "14.3.25" */
             margin-top: 20vh; /* Centered in the middle of the screen */
         }
+        #cursor1 {
+            display: inline-block;
+            width: 8px;
+            background-color: white;
+            animation: blink 0.8s infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
         #text {
             font-size: 1rem; /* Smaller font for the typed text */
             margin-bottom: 10px; /* Space between text and input */
@@ -46,7 +55,7 @@
 </head>
 <body>
     <!-- 1: "14.3.25" typing effect (center of screen) -->
-    <div id="originalText"></div>
+    <div id="originalText"></div><span id="cursor1">|</span>
 
     <!-- 2: "fourteenth..." typing effect (bottom of screen) -->
     <div id="text"></div>
@@ -54,6 +63,7 @@
     
     <script>
         const originalTextElement = document.getElementById("originalText");
+        const cursor1 = document.getElementById("cursor1");
         const textElement = document.getElementById("text");
         const consoleElement = document.getElementById("console");
 
