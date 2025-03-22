@@ -13,30 +13,29 @@
             font-family: "Courier New", monospace;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* Align to top for 1, and bottom for 2 */
+            justify-content: flex-end; /* Align text at the bottom */
             align-items: center;
             height: 100vh;
             width: 100vw;
             font-size: 1.5rem;
-            overflow: hidden; /* Hide scrollbars */
+            overflow: hidden;
         }
         .cursor {
             display: inline-block;
             width: 8px;
             background-color: white;
             animation: blink 0.8s infinite;
-            vertical-align: bottom; /* Align with text */
         }
         @keyframes blink {
             50% { opacity: 0; }
         }
         #originalText {
-            font-size: 2rem; /* Large font for "14.3.25" */
-            margin-top: 20vh; /* Position "14.3.25" in the middle */
+            font-size: 2rem; /* Larger text for "14.3.25" */
+            margin-top: 20vh; /* Centered in the middle of the screen */
         }
         #text {
-            font-size: 1rem; /* Smaller font size for the typed text */
-            margin-bottom: 10px; /* Space between the text and input */
+            font-size: 1rem; /* Smaller font for the typed text */
+            margin-bottom: 10px; /* Space between text and input */
         }
         #console {
             width: 80%;
@@ -45,29 +44,26 @@
             border: none;
             padding: 5px;
             font-family: "Courier New", monospace;
-            font-size: 1rem; /* Smaller font size for the input */
+            font-size: 1rem;
             outline: none;
             text-align: left;
             white-space: nowrap;
             overflow: hidden;
-            margin-bottom: 20px; /* Keep some space from the bottom */
-        }
-        #console:focus {
-            outline: none;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-    <!-- 1: Original "14.3.25" typing effect (middle of the screen) -->
-    <div id="originalText"></div><span id="cursor" class="cursor">|</span>
+    <!-- 1: "14.3.25" typing effect (center of screen) -->
+    <div id="originalText"></div><span class="cursor" id="cursor1">|</span>
 
-    <!-- 2: "fourteenth of February" typing effect (bottom of the screen) -->
-    <div id="text"></div><span class="cursor">|</span>
+    <!-- 2: "fourteenth..." typing effect (bottom of screen) -->
+    <div id="text"></div><span class="cursor" id="cursor2">|</span>
     <input id="console" type="text" autofocus readonly />
     
     <script>
         const originalTextElement = document.getElementById("originalText");
-        const cursorElement = document.getElementById("cursor");
+        const cursor1 = document.getElementById("cursor1");
         const textElement = document.getElementById("text");
         const consoleElement = document.getElementById("console");
 
@@ -76,41 +72,39 @@
         let originalIndex = 0;
         let index = 0;
 
-        // Function to type the original "14.3.25"
+        // Function to type "14.3.25"
         function typeOriginalText() {
             if (originalIndex < originalText.length) {
                 originalTextElement.textContent += originalText[originalIndex];
                 originalIndex++;
                 setTimeout(typeOriginalText, 300); // Type each character
             } else {
-                setTimeout(resetOriginalText, 5000); // Wait 5 seconds before resetting
+                setTimeout(resetOriginalText, 5000); // Reset after 5 seconds
             }
         }
 
-        // Function to reset the "14.3.25" typing effect and start again
+        // Reset "14.3.25" and start typing again
         function resetOriginalText() {
             originalIndex = 0;
             originalTextElement.textContent = ""; // Clear text
             typeOriginalText(); // Start typing again
         }
 
-        // Function to type the sentence into the input field
+        // Type the sentence in the console
         function typeSentence() {
             if (index < sentence.length) {
-                consoleElement.value += sentence[index]; // Append the next character from the sentence
-                index++; // Move to the next character
+                consoleElement.value += sentence[index]; // Append next character
+                index++; // Move to next character
             }
         }
 
-        // Start the "14.3.25" typing effect
+        // Start typing "14.3.25" in the middle of the screen
         typeOriginalText();
 
-        // Handle keypress event to type the sentence into the input field
+        // Handle keypress to type the sentence in the input field
         document.addEventListener('keydown', (event) => {
             event.preventDefault(); // Prevent default keypress behavior
-
-            // Simulate typing the sentence in the input field
-            typeSentence();
+            typeSentence(); // Simulate typing in the input field
         });
     </script>
 </body>
