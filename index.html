@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>*</title>
+    <title>Typing Effect</title>
     <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Hide scrollbars */
+            user-select: none; /* Disable text selection */
+        }
+        
         body {
             background-color: black;
             color: white;
@@ -12,20 +21,18 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            width: 100vw;
+            height: 100%;
+            width: 100%;
             font-size: 1.5rem;
-            overflow: hidden; /* Hide any scrollbars */
-            margin: 0; /* Remove default margins */
-            max-width: 100vw;
-            max-height: 100vh;
         }
+        
         .cursor {
             display: inline-block;
             width: 8px;
             background-color: white;
             animation: blink 0.8s infinite;
         }
+        
         @keyframes blink {
             50% { opacity: 0; }
         }
