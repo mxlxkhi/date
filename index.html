@@ -5,15 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Typing Effect</title>
     <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-            user-select: none;
-        }
-        
         body {
             background-color: black;
             color: white;
@@ -21,57 +12,40 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100%;
-            width: 100%;
+            height: 100vh;
             font-size: 1.5rem;
-            position: relative;
         }
-        
         .cursor {
             display: inline-block;
             width: 8px;
             background-color: white;
             animation: blink 0.8s infinite;
         }
-        
         @keyframes blink {
             50% { opacity: 0; }
         }
-
-        #morseText {
-            position: absolute;
+        #morseCode {
+            position: fixed;
             bottom: 10px;
             left: 10px;
             font-size: 1rem;
             color: black;
-            font-family: "Courier New", monospace;
         }
     </style>
 </head>
 <body>
     <div id="text"></div><span class="cursor">|</span>
-    <div id="morseText"></div>
+    <div id="morseCode">.. / .-.. --- ...- . / -.-- --- ..- .-.-.-</div>
+    <input type="text" id="input" autofocus placeholder="Type here..." />
+
     <script>
-        // Disable right-click and certain keyboard events
-        document.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-        });
-
-        document.addEventListener('keydown', (e) => {
-            // Prevent F12 (Developer Tools) and Ctrl + Shift + I
-            if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
-                e.preventDefault();
-            }
-            // Prevent right-clicking using context menu
-            if (e.ctrlKey && e.key === "U") { // Ctrl + U (View source)
-                e.preventDefault();
-            }
-        });
-
         const textElement = document.getElementById("text");
+        const morseCodeElement = document.getElementById("morseCode");
+        const inputElement = document.getElementById("input");
         const text = "14.3.25";
         let index = 0;
 
+        // Typing effect for the "14.3.25"
         function typeEffect() {
             if (index < text.length) {
                 textElement.textContent += text[index];
@@ -92,13 +66,16 @@
             }
         }
 
-        // Dynamically add Morse Code text after page load
-        window.onload = () => {
-            const morseText = ".. / .-.. --- ...- . / -.-- --- ..- .-.-.-";
-            document.getElementById('morseText').textContent = morseText;
-        };
-
         typeEffect();
+
+        // Detect when "turtle" is typed
+        inputElement.addEventListener("input", () => {
+            if (inputElement.value.toLowerCase() === "turtle") {
+                morseCodeElement.style.color = "white"; // Change Morse code color to white
+            } else {
+                morseCodeElement.style.color = "black"; // Change Morse code color back to black
+            }
+        });
     </script>
 </body>
 </html>
