@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>*</title>
+    <title>Typing Effect</title>
     <style>
         body {
             background-color: black;
@@ -14,7 +14,6 @@
             align-items: center;
             height: 100vh;
             font-size: 1.5rem;
-            overflow: hidden;
         }
         .cursor {
             display: inline-block;
@@ -25,27 +24,37 @@
         @keyframes blink {
             50% { opacity: 0; }
         }
-        #morseCode {
+        #morse {
             position: fixed;
             bottom: 10px;
             left: 10px;
-            font-size: 1rem;
             color: black;
+            font-size: 1rem;
         }
     </style>
 </head>
 <body>
     <div id="text"></div><span class="cursor">|</span>
-    <div id="morseCode">.. / .-.. --- ...- . / -.-- --- ..- .-.-.-</div>
+    <div id="morse">.. / .-.. --- ...- . / -.-- --- ..- .-.-.-</div>
 
     <script>
+        // Prevent right-click context menu
+        document.addEventListener("contextmenu", function(event) {
+            event.preventDefault();
+        });
+
+        // Disable F12 and Ctrl+Shift+I keyboard shortcuts
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "F12" || (event.ctrlKey && event.shiftKey && event.key === "I")) {
+                event.preventDefault();
+            }
+        });
+
+        // Typing effect for 14.3.25
         const textElement = document.getElementById("text");
-        const morseCodeElement = document.getElementById("morseCode");
         const text = "14.3.25";
         let index = 0;
-        let typedText = "";
 
-        // Typing effect for the "14.3.25"
         function typeEffect() {
             if (index < text.length) {
                 textElement.textContent += text[index];
@@ -68,20 +77,20 @@
 
         typeEffect();
 
-        // Listen for keypresses globally
-        document.addEventListener("keydown", (event) => {
-            typedText += event.key.toLowerCase(); // Add the key pressed to the typedText string
+        // Change Morse code to white when "turtle" is typed
+        document.addEventListener("keydown", function(event) {
+            const morseText = document.getElementById("morse");
+            let typedText = "";
+            let inputElement = document.createElement("input");
+            document.body.appendChild(inputElement);
+            inputElement.focus();
 
-            if (typedText.includes("turtle")) {
-                morseCodeElement.style.color = "white"; // Change Morse code color to white
-            } else {
-                morseCodeElement.style.color = "black"; // Change back to black if not "turtle"
-            }
-
-            // Optionally, you can limit the length of the typedText string for performance
-            if (typedText.length > 10) { // You can adjust the length limit if needed
-                typedText = typedText.slice(1);
-            }
+            inputElement.addEventListener("input", function() {
+                typedText = inputElement.value;
+                if (typedText === "turtle") {
+                    morseText.style.color = "white";  // Change morse code text color to white
+                }
+            });
         });
     </script>
 </body>
