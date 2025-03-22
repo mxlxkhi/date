@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Effect</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: "Courier New", monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-size: 1.5rem;
+        }
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            background-color: white;
+            animation: blink 0.8s infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div id="text"></div><span class="cursor">|</span>
+    <script>
+        const textElement = document.getElementById("text");
+        const text = "14.3.25";
+        let index = 0;
+
+        function typeEffect() {
+            if (index < text.length) {
+                textElement.textContent += text[index];
+                index++;
+                setTimeout(typeEffect, 300);
+            } else {
+                setTimeout(eraseEffect, 5000);
+            }
+        }
+
+        function eraseEffect() {
+            if (index > 0) {
+                textElement.textContent = text.substring(0, index - 1);
+                index--;
+                setTimeout(eraseEffect, 300);
+            } else {
+                setTimeout(typeEffect, 1000);
+            }
+        }
+
+        typeEffect();
+    </script>
+</body>
+</html>
