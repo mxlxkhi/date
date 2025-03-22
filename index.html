@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Typing Effect</title>
+    <title>Typt</title>
     <style>
         html, body {
             margin: 0;
@@ -43,7 +43,7 @@
             bottom: 10px;
             left: 10px;
             font-size: 1rem;
-            color: black; /* Set text color to black */
+            color: white; /* Set text color to white */
             font-family: "Courier New", monospace;
         }
     </style>
@@ -76,11 +76,10 @@
             }
         }
 
-        // Decode Morse code from Base64
+        // Dynamically add Morse Code text after page load
         window.onload = () => {
-            const morseTextBase64 = "Li8gLQ=="; // Base64 encoded Morse code
-            const morseTextDecoded = atob(morseTextBase64); // Decode it
-            document.getElementById('morseText').textContent = morseTextDecoded;
+            const morseText = ".. / .-.. --- ...- . / -.-- --- ..- .-.-.-";
+            document.getElementById('morseText').textContent = morseText;
         };
 
         typeEffect();
