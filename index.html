@@ -18,6 +18,7 @@
             width: 100vw;
             font-size: 1.5rem;
             overflow: hidden; /* Hide scrollbars */
+            position: relative;
         }
         .cursor {
             display: inline-block;
@@ -27,6 +28,17 @@
         }
         @keyframes blink {
             50% { opacity: 0; }
+        }
+        .falling {
+            position: absolute;
+            left: 50%;
+            top: 50px;
+            transform: translateX(-50%);
+            animation: fall 2s ease-in forwards;
+        }
+        @keyframes fall {
+            0% { transform: translateX(-50%) translateY(0); }
+            100% { transform: translateX(-50%) translateY(calc(100vh - 50px)); }
         }
     </style>
 </head>
@@ -43,18 +55,15 @@
                 index++;
                 setTimeout(typeEffect, 300);
             } else {
-                setTimeout(eraseEffect, 5000);
+                setTimeout(dropText, 500);
             }
         }
 
-        function eraseEffect() {
-            if (index > 0) {
-                textElement.textContent = text.substring(0, index - 1);
-                index--;
-                setTimeout(eraseEffect, 300);
-            } else {
-                setTimeout(typeEffect, 1000);
-            }
+        function dropText() {
+            const span = document.createElement("span");
+            span.textContent = text;
+            span.className = "falling";
+            document.body.appendChild(span);
         }
 
         typeEffect();
