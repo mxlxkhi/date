@@ -53,42 +53,36 @@
     </style>
 </head>
 <body>
-    <!-- Original "14.3.25" typing effect -->
-    <div id="originalText"></div><span class="cursor">|</span>
-
-    <!-- "fourteenth of February" typing effect in the input field -->
     <div id="text"></div><span class="cursor">|</span>
     <input id="console" type="text" autofocus readonly />
     
     <script>
-        const originalTextElement = document.getElementById("originalText");
         const textElement = document.getElementById("text");
         const consoleElement = document.getElementById("console");
-
-        const originalText = "14.3.25";
         const sentence = "fourteenth of February two thousand and twenty five";
-        let originalIndex = 0;
+        const originalText = "14.3.25";
         let index = 0;
+        let originalIndex = 0;
 
-        // Function to type the original "14.3.25"
+        // Function to simulate typing the original "14.3.25" text
         function typeOriginalText() {
             if (originalIndex < originalText.length) {
-                originalTextElement.textContent += originalText[originalIndex];
+                textElement.textContent += originalText[originalIndex];
                 originalIndex++;
-                setTimeout(typeOriginalText, 300); // Type each character
+                setTimeout(typeOriginalText, 300);
             } else {
-                setTimeout(resetOriginalText, 5000); // Wait 5 seconds before resetting
+                setTimeout(resetOriginalText, 5000); // 5-second delay before restarting
             }
         }
 
-        // Function to reset the "14.3.25" typing effect and start again
+        // Function to reset and type the original text again after a delay
         function resetOriginalText() {
             originalIndex = 0;
-            originalTextElement.textContent = ""; // Clear text
+            textElement.textContent = ""; // Clear text
             typeOriginalText(); // Start typing again
         }
 
-        // Function to type the sentence into the input field
+        // Function for typing the sentence
         function typeSentence() {
             if (index < sentence.length) {
                 consoleElement.value += sentence[index]; // Append the next character from the sentence
@@ -96,12 +90,10 @@
             }
         }
 
-        // Start the "14.3.25" typing effect
-        typeOriginalText();
-
-        // Handle keypress event to type the sentence into the input field
+        // Start typing effects
+        typeOriginalText(); // Start typing the original text
         document.addEventListener('keydown', (event) => {
-            event.preventDefault(); // Prevent default keypress behavior
+            event.preventDefault(); // Prevent the default keypress behavior
 
             // Simulate typing the sentence in the input field
             typeSentence();
