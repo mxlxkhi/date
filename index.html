@@ -13,7 +13,7 @@
             font-family: "Courier New", monospace;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* Align to top for 1, and bottom for 2 */
+            justify-content: flex-end; /* Align both to the bottom */
             align-items: center;
             height: 100vh;
             width: 100vw;
@@ -28,10 +28,6 @@
         }
         @keyframes blink {
             50% { opacity: 0; }
-        }
-        #originalText {
-            font-size: 2rem; /* Large font for "14.3.25" */
-            margin-top: 20vh; /* Position "14.3.25" in the middle */
         }
         #text {
             font-size: 1rem; /* Smaller font size for the typed text */
@@ -57,10 +53,10 @@
     </style>
 </head>
 <body>
-    <!-- 1: Original "14.3.25" typing effect (middle of the screen) -->
+    <!-- Original "14.3.25" typing effect -->
     <div id="originalText"></div><span class="cursor">|</span>
 
-    <!-- 2: "fourteenth of February" typing effect (bottom of the screen) -->
+    <!-- "fourteenth of February" typing effect in the input field -->
     <div id="text"></div><span class="cursor">|</span>
     <input id="console" type="text" autofocus readonly />
     
