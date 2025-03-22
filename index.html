@@ -53,55 +53,50 @@
     </style>
 </head>
 <body>
-    <!-- Original typing effect for 14.3.25 -->
-    <div id="originalText"></div><span class="cursor">|</span>
-
-    <!-- New text typing effect -->
     <div id="text"></div><span class="cursor">|</span>
-
     <input id="console" type="text" autofocus readonly />
     
     <script>
-        const originalTextElement = document.getElementById("originalText");
         const textElement = document.getElementById("text");
         const consoleElement = document.getElementById("console");
-
-        const originalText = "14.3.25";
         const sentence = "fourteenth of February two thousand and twenty five";
+        const originalText = "14.3.25";
+        let index = 0;
         let originalIndex = 0;
-        let sentenceIndex = 0;
 
-        // Function for typing the original text
+        // Function to simulate typing the original "14.3.25" text
         function typeOriginalText() {
             if (originalIndex < originalText.length) {
-                originalTextElement.textContent += originalText[originalIndex];
+                textElement.textContent += originalText[originalIndex];
                 originalIndex++;
                 setTimeout(typeOriginalText, 300);
+            } else {
+                setTimeout(resetOriginalText, 5000); // 5-second delay before restarting
             }
         }
 
-        // Function for typing the new sentence text
+        // Function to reset and type the original text again after a delay
+        function resetOriginalText() {
+            originalIndex = 0;
+            textElement.textContent = ""; // Clear text
+            typeOriginalText(); // Start typing again
+        }
+
+        // Function for typing the sentence
         function typeSentence() {
-            if (sentenceIndex < sentence.length) {
-                textElement.textContent += sentence[sentenceIndex];
-                sentenceIndex++;
-                setTimeout(typeSentence, 300);
+            if (index < sentence.length) {
+                consoleElement.value += sentence[index]; // Append the next character from the sentence
+                index++; // Move to the next character
             }
         }
 
-        // Start typing both texts
-        typeOriginalText();
-        typeSentence();
-
-        // When a key is pressed, replace the input value with the fixed phrase, letter by letter
+        // Start typing effects
+        typeOriginalText(); // Start typing the original text
         document.addEventListener('keydown', (event) => {
             event.preventDefault(); // Prevent the default keypress behavior
 
-            // If we haven't typed all characters, simulate typing the sentence
-            if (sentenceIndex < sentence.length) {
-                consoleElement.value += sentence[sentenceIndex]; // Append the next character from the sentence
-                sentenceIndex++; // Move to the next character
-            }
+            // Simulate typing the sentence in the input field
+            typeSentence();
         });
     </script>
 </body>
