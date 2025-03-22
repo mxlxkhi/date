@@ -33,11 +33,13 @@
 </head>
 <body>
     <div id="text"></div><span class="cursor">|</span>
+
     <script>
         const textElement = document.getElementById("text");
         const text = "14.3.25";
         let index = 0;
 
+        // Typing effect for the text in the body
         function typeEffect() {
             if (index < text.length) {
                 textElement.textContent += text[index];
@@ -48,6 +50,7 @@
             }
         }
 
+        // Erasing effect for the text in the body
         function eraseEffect() {
             if (index > 0) {
                 textElement.textContent = text.substring(0, index - 1);
@@ -58,7 +61,40 @@
             }
         }
 
+        // Function to animate the title in the browser tab
+        function animateTitle() {
+            const titleText = "Typing Effect - ";
+            const titleContent = ["14.3.25", "Fourteenth of February, 2025"];
+            let titleIndex = 0;
+            let titleCharIndex = 0;
+            let currentTitle = "";
+
+            // Simulate typing effect for the title
+            function updateTitle() {
+                if (titleCharIndex < titleContent[titleIndex].length) {
+                    currentTitle += titleContent[titleIndex][titleCharIndex];
+                    document.title = titleText + currentTitle;
+                    titleCharIndex++;
+                    setTimeout(updateTitle, 150);
+                } else {
+                    setTimeout(resetTitle, 1000);
+                }
+            }
+
+            // Reset and switch title
+            function resetTitle() {
+                currentTitle = "";
+                titleCharIndex = 0;
+                titleIndex = (titleIndex + 1) % titleContent.length;
+                setTimeout(updateTitle, 500); // Delay before switching title
+            }
+
+            updateTitle(); // Start the title animation
+        }
+
+        // Start typing effect for the text in the body and title animation
         typeEffect();
+        animateTitle();
     </script>
 </body>
 </html>
